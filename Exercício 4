@@ -1,0 +1,61 @@
+from abc import ABC, abstractmethod
+
+# Interface
+class Cibernetico(ABC):
+    @abstractmethod
+    def realizar_hack(self):
+        pass
+
+
+class Implante:
+    def __init__(self, nome, custo, funcao):
+        self.nome = nome
+        self.custo = custo
+        self.funcao = funcao
+
+    def __str__(self):
+        return f"Implante: {self.nome} (Função: {self.funcao}, Custo: {self.custo})"
+
+
+class NetRunner(Cibernetico):
+    def __init__(self, nome, implante):
+        self.nome = nome
+        # Composição → NetRunner precisa de um Implante
+        self.implante = implante
+
+    def realizar_hack(self):
+        print(f"{self.nome} usa {self.implante.nome} para {self.implante.funcao}!")
+
+
+class Faccao:
+    def __init__(self, nome, membros=None):
+        self.nome = nome
+        # Agregação → Faccao gerencia vários NetRunners
+        if membros is None:
+            membros = []
+        self.membros = membros
+
+    def adicionar_membro(self, membro: Cibernetico):
+        self.membros.append(membro)
+
+    def atacar(self):
+        print(f"Facção {self.nome} iniciou um ataque coordenado!")
+        for membro in self.membros:
+            membro.realizar_hack()
+
+
+
+impl1 = Implante("CyberDeck", 5000, "invadir câmeras")
+impl2 = Implante("NeuralLink", 7000, "roubar dados")
+impl3 = Implante("Overclock", 9000, "derrubar sistemas")
+
+n1 = NetRunner("V", impl1)
+n2 = NetRunner("Alt", impl2)
+n3 = NetRunner("T-Bug", impl3)
+
+faccao = Faccao("NetHackers")
+faccao.adicionar_membro(n1)
+faccao.adicionar_membro(n2)
+faccao.adicionar_membro(n3)
+
+faccao.atacar()
