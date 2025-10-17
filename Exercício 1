@@ -1,0 +1,36 @@
+class Personagem:
+    def __init__(self, vida: int, resistencia: int):
+        self._vida = vida
+        self._resistencia = resistencia
+
+    # Getter e Setter para vida
+    @property
+    def vida(self):
+        return self._vida
+
+    @vida.setter
+    def vida(self, valor):
+        if valor >= 0:
+            self._vida = valor
+        else:
+            print("A vida não pode ser negativa!")
+
+    def __str__(self):
+        return f"Personagem com {self._vida} de vida e {self._resistencia} de resistência"
+
+
+class Cavaleiro(Personagem):
+    def __init__(self, vida: int, resistencia: int, armadura_pesada: bool):
+        super().__init__(vida, resistencia)
+        self.armadura_pesada = armadura_pesada
+
+    def __str__(self):
+        return f"Cavaleiro com {self._vida} de vida, {self._resistencia} de resistência e armadura pesada = {self.armadura_pesada}"
+
+
+# Teste
+p1 = Personagem(100, 50)
+print(p1)
+
+c1 = Cavaleiro(150, 70, True)
+print(c1)
